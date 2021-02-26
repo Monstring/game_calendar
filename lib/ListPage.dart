@@ -35,32 +35,17 @@ class _ListPage extends State<ListPage> {
         onPressed: () async {
           var result = await Navigator.push<ItemModel>(
               context, MaterialPageRoute(builder: (context) => AddItemPage()));
-          print(result);
+          setState(() {
+            items.add(result);
+          });
         },
       ),
       body: Column(
+          mainAxisSize: MainAxisSize.max,
           children: items
-              .map((e) => SingleCard(
-                  image: 'image', name: e.name, initialTime: e.dateTime))
-              .toList()
-          // [
-          //   SingleCard(
-          //     image: 'image',
-          //     name: 'Metroid Prime 4',
-          //     timer: 'never',
-          //   ),
-          //   SingleCard(
-          //     image: 'image',
-          //     name: 'Shin Megami Tensei V',
-          //     timer: 'this year?',
-          //   ),
-          //   SingleCard(
-          //     image: 'image',
-          //     name: 'Silksong',
-          //     timer: 'SOON',
-          //   ),
-          // ],
-          ),
+              .map((card) => SingleCard(
+                  image: 'image', name: card.name, initialTime: card.dateTime))
+              .toList()),
     );
   }
 }

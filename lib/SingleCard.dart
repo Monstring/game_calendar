@@ -25,9 +25,11 @@ class _SingleCardState extends State<SingleCard> {
     remainingTime = widget.initialTime.difference(DateTime.now());
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        // remainingTime = remainingTime - (Duration(seconds: 1));
+        remainingTime = remainingTime - (Duration(seconds: 1));
         // timerMoment = Moment.fromDateTime(widget.initialTime);
-        timerText = remainingTime.inDays.toString();
+        timerText = remainingTime.inSeconds > 0
+            ? '${remainingTime.inDays.toString()}D : ${remainingTime.inHours.remainder(24).toString()}H : ${remainingTime.inMinutes.remainder(60).toString()}M : ${remainingTime.inSeconds.remainder(60).toString()}S'
+            : 'complete';
         // timerText = timerMoment.fromNow();
       });
     });
@@ -36,16 +38,21 @@ class _SingleCardState extends State<SingleCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10).copyWith(top: 5),
-      child: Card(
-          child: Row(
-        children: <Widget>[
-          Expanded(child: Text(widget.image)),
-          Expanded(child: Text(widget.name)),
-          Expanded(child: Text(timerText))
-        ],
-      )),
+    return Card(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(widget.image),
+            SizedBox(
+              width: 6,
+            ),
+            Expanded(child: Text(widget.name)),
+            Expanded(child: Text(timerText, textAlign: TextAlign.end))
+          ],
+        ),
+      ),
     );
   }
 }

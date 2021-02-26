@@ -16,12 +16,11 @@ class AddItemPage extends StatefulWidget {
 }
 
 class _AddItemPageState extends State<AddItemPage> {
+  DateTime _dateTime;
   final nameController = TextEditingController();
-  final timeController = TextEditingController();
   @override
   void dispose() {
     nameController.dispose();
-    timeController.dispose();
     super.dispose();
   }
 
@@ -44,11 +43,20 @@ class _AddItemPageState extends State<AddItemPage> {
             Row(
               children: [
                 Text('day of release: '),
-                Expanded(
-                  child: TextField(
-                    controller: timeController,
-                  ),
-                )
+                TextButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2010),
+                              lastDate: (DateTime(DateTime.now().year + 10)))
+                          .then((date) {
+                        setState(() {
+                          _dateTime = date;
+                        });
+                      });
+                    },
+                    child: Text('select date'))
               ],
             ),
             Row(
@@ -67,7 +75,7 @@ class _AddItemPageState extends State<AddItemPage> {
                               context,
                               ItemModel(
                                   name: nameController.text,
-                                  dateTime: DateTime.now()))
+                                  dateTime: _dateTime))
                         },
                     child: Text('submit'))
               ],
