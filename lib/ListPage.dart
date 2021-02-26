@@ -22,11 +22,14 @@ class ListPage extends StatefulWidget {
 
 class _ListPage extends State<ListPage> {
   List<ItemModel> items = [
-    ItemModel(name: 'xenoblade', dayTime: TimeOfDay.now().toString())
+    ItemModel(name: 'xenoblade', dateTime: DateTime(2021, 1, 22)),
+    ItemModel(name: 'shin megami tensei', dateTime: DateTime(2022, 1, 22)),
+    ItemModel(name: 'silksong', dateTime: DateTime.now())
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
@@ -37,8 +40,8 @@ class _ListPage extends State<ListPage> {
       ),
       body: Column(
           children: items
-              .map((e) =>
-                  SingleCard(image: 'image', name: e.name, timer: e.dayTime))
+              .map((e) => SingleCard(
+                  image: 'image', name: e.name, initialTime: e.dateTime))
               .toList()
           // [
           //   SingleCard(

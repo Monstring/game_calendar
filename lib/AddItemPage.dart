@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 
 class ItemModel {
   String name;
-  String dayTime;
+  DateTime dateTime;
 
-  ItemModel({this.name, this.dayTime});
+  ItemModel({this.name, this.dateTime});
 }
 
 class AddItemPage extends StatefulWidget {
@@ -67,7 +67,7 @@ class _AddItemPageState extends State<AddItemPage> {
                               context,
                               ItemModel(
                                   name: nameController.text,
-                                  dayTime: timeController.text))
+                                  dateTime: DateTime.now()))
                         },
                     child: Text('submit'))
               ],
